@@ -50,3 +50,14 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# STM32 Project
+Debug/*
+*.swp
+.settings/*
+#   STM32 Drivers are provided by IDE
+Drivers/*
+#   STM32 linker script provided by IDE
+*.ld
+#   STM32 JTAGE script provide by IDE
+*.launch
