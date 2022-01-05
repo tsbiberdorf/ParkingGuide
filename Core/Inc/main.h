@@ -48,7 +48,7 @@ extern "C" {
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
 #define MAJOR (1)
-#define MINOR (1)
+#define MINOR (2)
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
