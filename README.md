@@ -16,6 +16,7 @@ This following circuit attached to the Discovery Board:<br>
   <li> PB13 -- Yellow LED -- GND
   <li> PA12 -- HC-SR04 Trigger
   <li> GND -- 1K -- PC7 -- 1K -- HC-SR04 Echo
+  <li> PA11 -- BUZZER -- GND
 </ul>
 
 ## Setup
@@ -30,9 +31,9 @@ This following circuit attached to the Discovery Board:<br>
   <li> Power on
   <li> Approach the HC-SR04 sensor.
     <ol>
-      <li> if further than the program distance away the Green LED will appear
-      <li> when within 1" of the program distance both Grean and Blue LED will appear
-      <li> when closer than the program distance the Blue LED will appear
+      <li> if further than the program distance away the Green LED will appear, Buzzer will be off
+      <li> when within 1" of the program distance both Grean and Blue LED will appear, Buzzer will toggle
+      <li> when closer than the program distance the Blue LED will appear, Buzzer will be ON
     </ol>
   <li> Re-program distance
     <ol>
