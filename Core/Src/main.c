@@ -249,6 +249,30 @@ static void ToggleYellowLED()
 }
 
 /**
+ * @brief Toggle buzzer output
+ */
+static void ToggleBuzzer()
+{
+	HAL_GPIO_TogglePin(BUZZER_GPIO_Port, BUZZER_Pin);
+}
+
+/**
+ * @brief Turn Buzzer OFF
+ */
+static void BuzzerOFF()
+{
+	HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
+}
+
+/**
+ * @brief Turn Buzzer ON
+ */
+static void BuzzerON()
+{
+	HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_SET);
+}
+
+/**
  * @brief Read the user button press
  */
 static uint8_t ReadButton()
@@ -518,6 +542,10 @@ int main(void)
     /* USER CODE BEGIN 3 */
 	  if(tl_DistanceReadyFlag)
 	  {
+		  /*
+		   * loop every half second to provide details
+		   * to user
+		   */
 		  tl_DistanceReadyFlag = 0;
 		  if (ReadButton() )
 		  {
@@ -539,16 +567,29 @@ int main(void)
 
 			  if( tl_Distance < (tl_MeasureDistance - DISTANCE_MARGINE) )
 			  {
+				  /*
+				   * indicate that distance is too close
+				   */
 				  ClrGreenLED();
 				  SetBlueLED();
+				  BuzzerON();
+
 			  }
 			  else if(tl_Distance < (tl_MeasureDistance+ DISTANCE_MARGINE) )
 			  {
+				  /*
+				   * indicate that distance is now within 1" of the programmed distance
+				   */
 				  SetBlueLED();
 				  SetGreenLED();
+				  ToggleBuzzer();
 			  }
 			  else
 			  {
+				  /*
+				   * indicate that distance is too far away
+				   */
+				  BuzzerOFF();
 				  ClrBlueLED();
 				  SetGreenLED();
 			  }
@@ -728,6 +769,9 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, LED_BLUE_Pin|LED_GREEN_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(TRIGGER_GPIO_Port, TRIGGER_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : BUTTON_Pin */
@@ -758,12 +802,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : TRIGGER_Pin */
-  GPIO_InitStruct.Pin = TRIGGER_Pin;
+  /*Configure GPIO pins : BUZZER_Pin TRIGGER_Pin */
+  GPIO_InitStruct.Pin = BUZZER_Pin|TRIGGER_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(TRIGGER_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI4_15_IRQn, 0, 0);
