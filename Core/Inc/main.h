@@ -47,7 +47,8 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
+#define MAJOR (1)
+#define MINOR (1)
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -69,6 +70,8 @@ void Error_Handler(void);
 #define LED_BLUE_GPIO_Port GPIOC
 #define LED_GREEN_Pin GPIO_PIN_9
 #define LED_GREEN_GPIO_Port GPIOC
+#define BUZZER_Pin GPIO_PIN_11
+#define BUZZER_GPIO_Port GPIOA
 #define TRIGGER_Pin GPIO_PIN_12
 #define TRIGGER_GPIO_Port GPIOA
 #define DEBUG4_Pin GPIO_PIN_4
